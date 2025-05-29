@@ -8,3 +8,41 @@
     body {
       background-color: #121212;
       color: #ffffff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.2em;
+      color: #cccccc;
+    }
+    .loader {
+      margin-top: 30px;
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #ff9800;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Сайт в разработке</h1>
+  <p>Пожалуйста, зайдите позже 🛠️</p>
+  <div class="loader"></div>
+</body>
+</html>
