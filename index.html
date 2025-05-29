@@ -3,320 +3,280 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Магазин Голда</title>
+<title>Tiger Coin - Кликер с тигром</title>
 <style>
-  /* Сброс стилей */
+  /* Общие стили */
   * {
     box-sizing: border-box;
   }
   body {
-    margin:0; 
+    margin:0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
+    background: linear-gradient(135deg, #f5af19, #f12711);
     color: #fff;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    padding: 20px;
   }
   header {
-    background: rgba(0,0,0,0.3);
-    padding: 15px 20px;
+    width: 100%;
+    max-width: 600px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 15px;
   }
-  header .logo {
+  header h1 {
+    font-size: 1.6rem;
+    margin: 0;
+  }
+  #coin-count {
     font-weight: 700;
-    font-size: 1.8rem;
-    letter-spacing: 2px;
+    font-size: 1.4rem;
+    background: rgba(255 255 255 / 0.15);
+    padding: 8px 15px;
+    border-radius: 25px;
     user-select: none;
-  }
-  nav {
-    display: flex;
-    gap: 20px;
-  }
-  nav button {
-    background: transparent;
-    border: 2px solid #fff;
-    border-radius: 4px;
-    color: #fff;
-    padding: 7px 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  nav button:hover, nav button.active {
-    background-color: #fff;
-    color: #3a1c71;
+    min-width: 120px;
+    text-align: center;
   }
 
   main {
-    flex-grow: 1;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    background: rgba(0,0,0,0.2);
+    border-radius: 15px;
+    max-width: 600px;
     width: 100%;
-  }
-  /* Главная */
-  #home {
-    display: none;
-    animation: fadeIn 0.6s ease forwards;
-  }
-  #home.active {
-    display: block;
-  }
-  #home h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-  }
-  #home p {
-    font-size: 1.2rem;
-    line-height: 1.5;
-    max-width: 700px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
   }
 
-  /* Каталог */
-  #catalog {
-    display: none;
-    animation: fadeIn 0.6s ease forwards;
+  #tiger-btn {
+    display: block;
+    margin: 0 auto 15px auto;
+    width: 200px;
+    height: 200px;
+    background: url('https://cdn-icons-png.flaticon.com/512/616/616408.png') no-repeat center/contain;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 0 0 20px #f5af19;
+    transition: transform 0.1s ease;
   }
-  #catalog.active {
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
-    gap: 20px;
+  #tiger-btn:active {
+    transform: scale(0.95);
   }
-  .product-card {
-    background: rgba(255 255 255 / 0.15);
-    border-radius: 10px;
-    padding: 15px;
+
+  #click-value {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    user-select: none;
+  }
+
+  .upgrades {
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s ease;
+    gap: 15px;
   }
-  .product-card:hover {
-    transform: translateY(-6px);
-    background: rgba(255 255 255 / 0.25);
+  .upgrade {
+    background: rgba(255 255 255 / 0.1);
+    padding: 12px 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-  .product-card img {
-    width: 100%;
-    border-radius: 8px;
-    object-fit: contain;
-    height: 160px;
-    margin-bottom: 10px;
-  }
-  .product-card h3 {
-    margin: 0 0 8px 0;
-    font-weight: 700;
-    font-size: 1.3rem;
-    color: #fff;
-  }
-  .product-card p {
+  .upgrade-info {
     flex-grow: 1;
-    font-size: 0.95rem;
-    color: #eee;
-    margin-bottom: 10px;
   }
-  .product-card .price {
+  .upgrade-name {
     font-weight: 700;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: #ffd700;
-  }
-  .product-card button {
-    background-color: #ffd700;
-    border: none;
-    border-radius: 6px;
-    padding: 10px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .product-card button:hover {
-    background-color: #e6c200;
-  }
-
-  /* Корзина */
-  #cart {
-    display: none;
-    animation: fadeIn 0.6s ease forwards;
-  }
-  #cart.active {
-    display: block;
-  }
-  #cart table {
-    width: 100%;
-    border-collapse: collapse;
-    background: rgba(255 255 255 / 0.15);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  #cart th, #cart td {
-    padding: 12px 10px;
-    color: #fff;
-    text-align: center;
-  }
-  #cart th {
-    background: rgba(0,0,0,0.3);
-  }
-  #cart tbody tr:nth-child(even) {
-    background: rgba(0,0,0,0.15);
-  }
-  #cart button {
-    background-color: #ff4d4d;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    color: white;
-    font-weight: 700;
-    transition: background-color 0.3s ease;
-  }
-  #cart button:hover {
-    background-color: #cc0000;
-  }
-  #cart input[type=number] {
-    width: 60px;
-    padding: 5px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: none;
-    text-align: center;
-  }
-  #cart .total {
-    margin-top: 20px;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #ffd700;
-    text-align: right;
-  }
-  #cart .checkout-btn {
-    margin-top: 20px;
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 12px 24px;
     font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
+  .upgrade-desc {
+    font-size: 0.9rem;
+    color: #ddd;
+  }
+  .upgrade-cost {
     font-weight: 700;
-    border-radius: 7px;
+    font-size: 1rem;
+    color: #f5af19;
+    margin-right: 15px;
+    min-width: 70px;
+    text-align: right;
+    user-select: none;
+  }
+  .upgrade-btn {
+    background: #f5af19;
+    border: none;
+    padding: 8px 14px;
+    font-weight: 700;
+    color: #222;
+    border-radius: 8px;
     cursor: pointer;
-    float: right;
     transition: background-color 0.3s ease;
   }
-  #cart .checkout-btn:hover {
-    background-color: #357a38;
+  .upgrade-btn:hover:not(:disabled) {
+    background: #d18c0b;
+  }
+  .upgrade-btn:disabled {
+    cursor: not-allowed;
+    background: #a8a8a8;
+    color: #444;
   }
 
-  /* Контакты */
-  #contacts {
-    display: none;
-    animation: fadeIn 0.6s ease forwards;
-    max-width: 500px;
-    margin: 0 auto;
+  #code-section {
+    margin-top: 25px;
+    background: rgba(255 255 255 / 0.1);
+    padding: 15px 20px;
+    border-radius: 12px;
   }
-  #contacts.active {
-    display: block;
-  }
-  #contacts form {
-    background: rgba(255 255 255 / 0.15);
-    padding: 20px;
-    border-radius: 10px;
-  }
-  #contacts label {
+  #code-section label {
+    font-weight: 700;
     display: block;
     margin-bottom: 8px;
-    font-weight: 700;
   }
-  #contacts input, #contacts textarea {
+  #code-input {
     width: 100%;
-    padding: 8px 10px;
-    margin-bottom: 15px;
-    border-radius: 6px;
-    border: none;
-    font-size: 1rem;
-  }
-  #contacts button {
-    background-color: #ffd700;
-    border: none;
-    padding: 12px 20px;
-    font-weight: 700;
-    cursor: pointer;
-    border-radius: 7px;
-    transition: background-color 0.3s ease;
-    width: 100%;
-  }
-  #contacts button:hover {
-    background-color: #e6c200;
-  }
-
-  /* Поиск */
-  #search-bar {
-    margin-bottom: 15px;
-    width: 100%;
-    max-width: 400px;
-  }
-  #search-bar input {
-    width: 100%;
-    padding: 8px 12px;
+    padding: 10px 12px;
     border-radius: 8px;
     border: none;
     font-size: 1rem;
+    margin-bottom: 12px;
+  }
+  #apply-code-btn {
+    background: #f5af19;
+    border: none;
+    padding: 10px 14px;
+    font-weight: 700;
+    color: #222;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  #apply-code-btn:hover {
+    background: #d18c0b;
   }
 
-  @keyframes fadeIn {
-    from {opacity:0;}
-    to {opacity:1;}
+  #message {
+    margin-top: 12px;
+    font-weight: 700;
+    min-height: 22px;
+    text-align: center;
+    user-select: none;
   }
 
   /* Адаптив */
-  @media (max-width: 768px) {
-    header {
-      justify-content: center;
-      gap: 10px;
-    }
-    nav {
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .product-card img {
-      height: 140px;
-    }
-  }
   @media (max-width: 480px) {
-    #cart table, #cart thead, #cart tbody, #cart th, #cart td, #cart tr {
-      display: block;
-    }
-    #cart tr {
-      margin-bottom: 15px;
-      border-bottom: 2px solid #fff;
-    }
-    #cart td {
-      text-align: right;
-      padding-left: 50%;
-      position: relative;
-    }
-    #cart td::before {
-      content: attr(data-label);
-      position: absolute;
-      left: 10px;
-      top: 12px;
-      font-weight: 700;
-      color: #ffd700;
-      text-align: left;
-    }
-    #cart input[type=number] {
-      width: 100%;
+    #tiger-btn {
+      width: 150px;
+      height: 150px;
     }
   }
 </style>
 </head>
 <body>
+
 <header>
-  <div class="logo">MOLD Голда</div>
-  <nav>
-    <button class="nav-btn active" data-target="home">Главная</button>
-    <button class="nav-btn" data-target="catalog">Каталог</button>
-    <button class="nav-btn" data-target="cart">Корзина (<span id="cart-count">0</span>)</button>
-    <button class="nav-btn" data-target="contacts">Контакты</button>
+  <h1>Tiger Coin</h1>
+  <div id="coin-count">Монеты: 0</div>
+</header>
+
+<main>
+  <button id="tiger-btn" aria-label="Нажмите на тигра, чтобы получить монеты"></button>
+  <div id="click-value">Монет за клик: 1</div>
+
+  <div class="upgrades" aria-label="Улучшения">
+    <!-- Улучшения появятся здесь -->
+  </div>
+
+  <section id="code-section" aria-label="Ввод кодов">
+    <label for="code-input">Введите код для получения монет:</label>
+    <input type="text" id="code-input" placeholder="Введите код..." autocomplete="off" />
+    <button id="apply-code-btn">Применить код</button>
+    <div id="message" role="alert" aria-live="polite"></div>
+  </section>
+</main>
+
+<script>
+  const coinCountEl = document.getElementById('coin-count');
+  const tigerBtn = document.getElementById('tiger-btn');
+  const clickValueEl = document.getElementById('click-value');
+  const upgradesContainer = document.querySelector('.upgrades');
+  const codeInput = document.getElementById('code-input');
+  const applyCodeBtn = document.getElementById('apply-code-btn');
+  const messageEl = document.getElementById('message');
+
+  let coins = 0;
+  let coinsPerClick = 1;
+
+  // Объекты улучшений
+  const upgrades = [
+    {
+      id: 'upgrade1',
+      name: 'Увеличение клика',
+      description: 'Увеличивает монеты за клик на 1',
+      baseCost: 50,
+      cost: 50,
+      level: 0,
+      increment: 1,
+    },
+    {
+      id: 'upgrade2',
+      name: 'Усиленный клик',
+      description: 'Увеличивает монеты за клик на 5',
+      baseCost: 200,
+      cost: 200,
+      level: 0,
+      increment: 5,
+    },
+    {
+      id: 'upgrade3',
+      name: 'Премиум тигр',
+      description: 'Увеличивает монеты за клик на 20',
+      baseCost: 1000,
+      cost: 1000,
+      level: 0,
+      increment: 20,
+    }
+  ];
+
+  // Обновление UI монет и клика
+  function updateUI() {
+    coinCountEl.textContent = `Монеты: ${coins.toLocaleString()}`;
+    clickValueEl.textContent = `Монет за клик: ${coinsPerClick.toLocaleString()}`;
+    renderUpgrades();
+  }
+
+  // Отрисовка блока улучшений
+  function renderUpgrades() {
+    upgradesContainer.innerHTML = '';
+    upgrades.forEach(upg => {
+      const upgradeEl = document.createElement('div');
+      upgradeEl.className = 'upgrade';
+
+      const infoEl = document.createElement('div');
+      infoEl.className = 'upgrade-info';
+
+      const nameEl = document.createElement('div');
+      nameEl.className = 'upgrade-name';
+      nameEl.textContent = `${upg.name} (уровень: ${upg.level})`;
+
+      const descEl = document.createElement('div');
+      descEl.className = 'upgrade-desc';
+      descEl.textContent = upg.description;
+
+      infoEl.appendChild(nameEl);
+      infoEl.appendChild(descEl);
+
+      const costEl = document.createElement('div');
+      costEl.className = 'upgrade-cost';
+      costEl.textContent = `${upg.cost.toLocaleString()} монет`;
+
+      const btn = document.createElement('button');
+      btn.className = 'upgrade-btn';
+      btn
